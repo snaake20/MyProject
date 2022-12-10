@@ -37,7 +37,7 @@ std::istream& operator>>(std::istream& in, Time& t) {
 	t.hour = temp;
 	std::cout << "Introduceti minutul: ";
 	in >> temp;
-	while (temp > 23) {
+	while (temp > 59) {
 		std::cout << "Ai gresit minutul. Reintroduceti minutul: ";
 		in >> temp;
 	}

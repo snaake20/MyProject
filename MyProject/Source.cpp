@@ -1,4 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <ctime>
 #include "Bilet.h"
 #include "Time.h"
 
@@ -18,8 +20,10 @@ int main()
 
     std::cout << b;*/
     
-    Time t(7, 60);
-    std::cout << t.timeFormatted(':');
+    /*Time t(7, 60);
+    std::cout << t.timeFormatted(':');*/
+
+    
 
     return 0;
 }

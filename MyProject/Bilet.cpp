@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Bilet.h"
 #include "Utils.h"
 

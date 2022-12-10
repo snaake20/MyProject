@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "Film.h"
+#include "Eveniment.h"
 
 class Bilet {
 private:
