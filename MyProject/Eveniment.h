@@ -34,6 +34,9 @@ public:
 	Date getDate();
 	void setDate(const unsigned day, const unsigned month, const unsigned year);
 	
+	//preincrement and postincrement
+	Eveniment& operator++(); //reprogramare spectacol
+	Eveniment operator++(int); //reprogramare spectacol
 
 };
 

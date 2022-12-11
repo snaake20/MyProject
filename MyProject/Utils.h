@@ -4,7 +4,8 @@
 class Utils
 {
 public:
-	static void copyChar(char*& dest, const char* src);
+	static void allocChar(char*& dest, const char* src);
+	static void reallocChar(char*& dest, const char* src);
 	static void deallocChar(char*& dest);
 	static unsigned validateHour(const unsigned hour);
 	static unsigned validateMinute(const unsigned minute);

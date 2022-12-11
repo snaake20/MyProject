@@ -1,20 +1,24 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <ctime>
 #include "Bilet.h"
-#include "Time.h"
+#include "Eveniment.h"
 
 int main()
 {
     Date d(20,2,2023);
-    std::cout << d.DateFormatted('-');
+    //std::cout << d.DateFormatted('-');
 
     Time t(23, 59);
-    std::cout << t.timeFormatted(':');
+    //std::cout << t.timeFormatted(':');
 
-    Eveniment eveniment_cool("Strip club", t, d);
+    Eveniment eveniment_cool((const char*)"Strip club", t, d);
 
-    std::cout << eveniment_cool;
+    std::cin >> eveniment_cool;
+
+    std::cout << eveniment_cool << std::endl;
+
+    ++eveniment_cool;
+
+    std::cout << eveniment_cool << std::endl;
 
     return 0;
 }

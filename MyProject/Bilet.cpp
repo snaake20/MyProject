@@ -5,23 +5,20 @@ Bilet::Bilet():id(0) {
 	sala = 0;
 	rand = 0;
 	loc = 0;
-	tipBilet = "";
 	
 }
 
-Bilet::Bilet(const unsigned sala, const unsigned rand, const unsigned loc, const std::string tipBilet, const char* denumireFilm, const std::string data, const std::string ora):id(createId(this)) {
+Bilet::Bilet(const unsigned sala, const unsigned rand, const unsigned loc, const bool isSpecialTicket): id(createId(this))
+{
 	this->sala = sala;
 	this->rand = rand;
 	this->loc = loc;
-	this->tipBilet = tipBilet;
-	
 }
 
 Bilet::Bilet(Bilet&b):id(b.id) {
 	this->sala = b.sala;
 	this->rand = b.rand;
 	this->loc = b.loc;
-	this->tipBilet = b.tipBilet;
 
 }
 

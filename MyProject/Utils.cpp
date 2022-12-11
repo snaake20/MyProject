@@ -2,7 +2,15 @@
 #include "Utils.h"
 #include <ctime>
 
-void Utils::copyChar(char*& dest, const char* src) {
+void Utils::allocChar(char*& dest, const char* src)
+{
+	if (src != nullptr) {
+		dest = new char[strlen(src) + 1];
+		strcpy_s(dest, strlen(src) + 1, src);
+	}
+}
+
+void Utils::reallocChar(char*& dest, const char* src) {
 	if (src != nullptr) {
 		if (dest != nullptr) {
 			delete[] dest;
@@ -18,8 +26,6 @@ void Utils::deallocChar(char*& dest) {
 		dest = nullptr;
 	}
 }
-
-
 
 unsigned Utils::validateHour(const unsigned hour) {
 	return (hour >= 0 && hour <= 23) ? hour : 0;

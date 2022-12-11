@@ -9,14 +9,14 @@ private:
 	unsigned sala;
 	unsigned rand;
 	unsigned loc;
-	std::string tipBilet;
+	bool isSpecialTicket;
 	//Eveniment* eveniment;
 
 public:
 
 	Bilet();
 
-	Bilet(const unsigned sala, const unsigned rand, const unsigned loc, const std::string tipBilet ,const char* denumireFilm, const std::string data, const std::string ora);
+	Bilet(const unsigned sala, const unsigned rand, const unsigned loc, const bool isSpecialTicket);
 
 	Bilet(Bilet& b);
 
