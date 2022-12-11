@@ -40,24 +40,6 @@ std::istream& operator>> (std::istream& in, Bilet& b) {
 	in >> b.loc;
 	std::cout << std::endl;
 	std::cout << "Tip bilet: ";
-	in >> b.tipBilet;
-	std::cout << std::endl;
-	std::cout << "Denumire film: ";
-	std::string buffer;
-	/*in >> buffer;
-	if (buffer.length() != 0) {
-		Utils::copyChar(b.denumireFilm, buffer.c_str());
-	}
-	else {
-		b.denumireFilm = nullptr;
-	}
-	std::cout << std::endl;	
-	std::cout << "Data film: ";
-	in >> b.data;
-	std::cout << std::endl;	
-	std::cout << "Ora film: ";
-	in >> b.ora;
-	std::cout << std::endl;*/
 
 	return in;
 }
@@ -68,7 +50,7 @@ std::ostream& operator<< (std::ostream& out, const Bilet b) {
 	out << b.sala << std::endl;
 	out << b.rand << std::endl;
 	out << b.loc << std::endl;
-	//out << b.film;
+	//out << b.eveniment;
 
 	return out;
 }

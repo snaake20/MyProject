@@ -13,7 +13,7 @@ private:
 public:
 	//constructors
 	Eveniment();
-	Eveniment(const char* denumireEveniment, const Time& t, const Date& d);
+	Eveniment(const char* denumireEveniment, Time& t, Date& d);
 
 	//copy constructor and destructor
 	Eveniment(Eveniment& e);
@@ -28,11 +28,11 @@ public:
 
 	//getters and setters
 	char* getDenumireEveniment();
-	void setDenumireEveniment();
+	void setDenumireEveniment(const char* denumireEveniment);
 	Time getTime();
-	void setTime(const unsigned day);
+	void setTime(const unsigned hour, const unsigned minute);
 	Date getDate();
-	void setDate(const unsigned minute);
+	void setDate(const unsigned day, const unsigned month, const unsigned year);
 	
 
 };

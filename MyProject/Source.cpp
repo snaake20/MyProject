@@ -6,25 +6,15 @@
 
 int main()
 {
-    /*std::cout << "Hello World!\n";
-    Bilet b("Marcel");
-    std::cout << b.getNume();*/
+    Date d(20,2,2023);
+    std::cout << d.DateFormatted('-');
 
-    /*char* copiazaAici = nullptr;
+    Time t(23, 59);
+    std::cout << t.timeFormatted(':');
 
-    Utils::copyChar(copiazaAici, "Mor aici");
+    Eveniment eveniment_cool("Strip club", t, d);
 
-    std::cout << copiazaAici;*/
-
-    /*Bilet b(1, 1, 1, "Vip", "Scarface", "01.01.1900", "01:01");
-
-    std::cout << b;*/
-    
-    /*Time t(7, 60);
-    std::cout << t.timeFormatted(':');*/
-
-    Date d;
-    std::cin >> d;
+    std::cout << eveniment_cool;
 
     return 0;
 }
