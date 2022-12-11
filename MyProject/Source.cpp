@@ -23,7 +23,8 @@ int main()
     /*Time t(7, 60);
     std::cout << t.timeFormatted(':');*/
 
-    
+    Date d;
+    std::cin >> d;
 
     return 0;
 }

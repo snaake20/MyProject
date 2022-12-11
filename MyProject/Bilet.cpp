@@ -17,6 +17,14 @@ Bilet::Bilet(const unsigned sala, const unsigned rand, const unsigned loc, const
 	
 }
 
+Bilet::Bilet(Bilet&b):id(b.id) {
+	this->sala = b.sala;
+	this->rand = b.rand;
+	this->loc = b.loc;
+	this->tipBilet = b.tipBilet;
+
+}
+
 int Bilet::createId(Bilet*) {
 	return (int)this;
 }

@@ -10,7 +10,7 @@ private:
 	unsigned rand;
 	unsigned loc;
 	std::string tipBilet;
-	//Film film;
+	//Eveniment* eveniment;
 
 public:
 

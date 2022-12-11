@@ -2,9 +2,12 @@
 #include "Utils.h"
 
 Date::Date() {
-	this->day = 1;
-	this->month = 1;
-	this->year = 1900;
+
+	std::tm* curr = Utils::getCurrentDate();
+
+	this->day = curr->tm_mday;
+	this->month = curr->tm_mon + 1;
+	this->year = curr->tm_year + 1900;
 };
 
 Date::Date(const unsigned day, const unsigned month, const unsigned year):Date::Date() {
@@ -33,28 +36,25 @@ Date& Date::operator=(Date& d) {
 }
 
 std::istream& operator>>(std::istream& in, Date& d) {
-	unsigned temp;
+	unsigned day, month, year;
 	std::cout << "Introduceti ziua: ";
-	in >> temp;
-	while (!Utils::validateDate(temp, d.month, d.year)) {
-		std::cout << "Ai introdus o data invalida. Reintroduceti ziua: ";
-		in >> temp;
-	}
-	d.day = temp;
+	in >> day;
 	std::cout << "Introduceti luna: ";
-	in >> temp;
-	while (!Utils::validateDate(d.day, temp, d.year)) {
-		std::cout << "Ai introdus o data invalida. Reintroduceti luna: ";
-		in >> temp;
-	}
-	d.month = temp;
+	in >> month;
 	std::cout << "Introduceti anul: ";
-	in >> temp;
-	while (!Utils::validateDate(d.day, d.month, temp)) {
-		std::cout << "Ai introdus o data invalida. Reintroduceti anul: ";
-		in >> temp;
+	in >> year;
+	while (!Utils::validateDate(day, month, year)) {
+		std::cout << "Ati introdus o data invalida! Reintroduceti:" << std::endl;
+		std::cout << "ziua: ";
+		in >> day;
+		std::cout << "luna: ";
+		in >> month;
+		std::cout << "anul: ";
+		in >> year;
 	}
-	d.year = temp;
+	d.day = day;
+	d.month = month;
+	d.year = year;
 	return in;
 }
 
