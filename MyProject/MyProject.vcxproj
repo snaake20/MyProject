@@ -129,18 +129,18 @@
   <ItemGroup>
     <ClCompile Include="Bilet.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Locatie.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Eveniment.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Sala.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bilet.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="Locatie.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Eveniment.h" />
-    <ClInclude Include="Sala.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

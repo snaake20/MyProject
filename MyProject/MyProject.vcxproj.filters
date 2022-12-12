@@ -21,9 +21,6 @@
     <ClCompile Include="Bilet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sala.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,12 +33,12 @@
     <ClCompile Include="Date.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Locatie.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bilet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sala.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
@@ -54,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Date.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Locatie.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

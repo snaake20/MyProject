@@ -6,25 +6,24 @@
 class Bilet {
 private:
 	const int id;
-	unsigned sala;
 	unsigned rand;
 	unsigned loc;
-	bool isSpecialTicket;
-	//Eveniment* eveniment;
+	bool isStandard;
+	Eveniment* eveniment;
 
 public:
 
 	Bilet();
-
-	Bilet(const unsigned sala, const unsigned rand, const unsigned loc, const bool isSpecialTicket);
+	Bilet(const unsigned rand, const unsigned loc, const bool isStandard, Eveniment& eveniment);
 
 	Bilet(Bilet& b);
-
-	//~Bilet();
+	~Bilet();
 
 	int createId(Bilet*);
 
 	friend std::istream& operator>> (std::istream& in, Bilet& b);
-
 	friend std::ostream& operator<< (std::ostream& out, const Bilet b);
+
+	//operator!
+	Bilet& operator!();
 };

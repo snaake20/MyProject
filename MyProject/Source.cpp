@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Bilet.h"
 #include "Eveniment.h"
+#include "Locatie.h"
 
 int main()
 {
@@ -12,13 +13,28 @@ int main()
 
     Eveniment eveniment_cool((const char*)"Strip club", t, d);
 
+
+    //std::cout << eveniment_cool << std::endl;
+
+    /*++eveniment_cool;
+
+    std::cout << eveniment_cool << std::endl;
+
+    Bilet b(2, 3, true, eveniment_cool);
+
+    std::cout << b << std::endl;
+
     std::cin >> eveniment_cool;
-
-    std::cout << eveniment_cool << std::endl;
-
-    ++eveniment_cool;
-
-    std::cout << eveniment_cool << std::endl;
-
+    
+    std::cout << b << std::endl;*/
+    
+    Locatie l("Baneasa", 20, 4);
+    
+    std::cout << l << std::endl;
+    
+    l + 2;
+    
+    std::cout << l;
+    
     return 0;
 }
