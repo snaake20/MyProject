@@ -12,8 +12,8 @@ private:
 	unsigned nrRanduri;
 	unsigned* randuriVip;
 	unsigned nrRanduriVip;
-	unsigned** disponibilitateLocuri;
-	char** zone;
+	unsigned** disponibilitateLocuri; // to be replaced with a 2d vector of Loc objects
+	char** zone; // to be replaced with a 2d vector of Loc objects
 public:
 	//constructors
 	Locatie();
@@ -45,12 +45,14 @@ public:
 	unsigned getNrRanduriVip() const;
 	unsigned** getDisponibilitateLocuri() const;
 	char** getZone() const;
+	static unsigned getNrLocatii();
 	void setNumeLocatie(const std::string numeLocatie);
 	void setNrLocuri(const unsigned nrLocuri);
 	void setNrRanduri(const unsigned nrRanduri);
 	void setRanduriVip(const unsigned* randuriVip, const unsigned nrRanduriVip);
 	void setDisponibilitateLocuri(const unsigned** disponibilitateLocuri);
-	void setZone(const char** zone);	
+	void setZone(const char** zone);
+	static void setNrLocatii(const unsigned nrLocatii);
 
 	//general methods
 	void setDefaultDisponibilitate();

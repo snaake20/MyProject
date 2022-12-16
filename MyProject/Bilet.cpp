@@ -1,14 +1,14 @@
 #include "Bilet.h"
 #include "Utils.h"
 
-Bilet::Bilet():id(0) {
+Bilet::Bilet():id(CiD::generateCiD()) {
 	rand = 0;
 	loc = 0;
 	isStandard = true;
 	eveniment = nullptr;
 }
 
-Bilet::Bilet(const unsigned rand, const unsigned loc, const bool isStandard, Eveniment& eveniment): id(0)
+Bilet::Bilet(const unsigned rand, const unsigned loc, const bool isStandard, Eveniment& eveniment): id(CiD::generateCiD())
 {
 	this->rand = rand;
 	this->loc = loc;
@@ -59,7 +59,7 @@ std::ostream& operator<< (std::ostream& out, const Bilet b) {
 	out << "Loc: " << b.loc << std::endl;
 	out << "Tipul biletului: " << (b.isStandard == true ? "Standard" : "Special") << std::endl;
 	out << "Eveniment: " << *b.eveniment;
-
+	
 	return out;
 }
 
@@ -114,71 +114,28 @@ void Bilet::setEveniment(Eveniment& eveniment)
 		this->eveniment = &eveniment;
 }
 
-bool Bilet::isSeatAvailable(Locatie l, Bilet b)
+void Bilet::ocupaLoc(Locatie l)
 {
-	for (unsigned i = 0; i < l.getNrRanduri(); i++)
+	if (l[this->rand][this->loc] == 1)
 	{
-		for (unsigned j = 0; j < l.getNrLocuri(); j++)
+		for (unsigned k = 0; k < l.getNrRanduriVip(); k++)
 		{
-			if (l[i][j] == 1)
-			{
-				for (unsigned k = 0; k < l.getNrRanduriVip(); k++)
-				{
-					if (b.getIsStandard() && i != l.getRanduriVip()[k])
-						return true;
-					else return false;
-					if (!b.getIsStandard() && i == l.getRanduriVip()[k])
-						return true;
-					else return false;
-				}
-			}
+			if (this->isStandard && this->rand != l.getRanduriVip()[k])
+				l[this->rand][this->loc] = 0;
+			if (!this->isStandard && this->rand == l.getRanduriVip()[k])
+				l[this->rand][this->loc] = 0;
 		}
 	}
 }
 
-void Bilet::ocupaLoc(Locatie l, Bilet b)
+void Bilet::elibereazaLoc(Locatie l)
 {
-	for (unsigned i = 0; i < l.getNrRanduri(); i++)
-	{
-		for (unsigned j = 0; j < l.getNrLocuri(); j++)
-		{
-			if (l[i][j] == 1)
-			{
-				for (unsigned k = 0; k < l.getNrRanduriVip(); k++)
-				{
-					if (b.getIsStandard() && i != l.getRanduriVip()[k])
-						l[i][j] = 0;
-					if (!b.getIsStandard() && i == l.getRanduriVip()[k])
-						l[i][j] = 0;
-				}
-			}
-		}
-	}
-}
-
-void Bilet::elibereazaLoc(Locatie l, Bilet b)
-{
-	for (unsigned i = 0; i < l.getNrRanduri(); i++)
-	{
-		for (unsigned j = 0; j < l.getNrLocuri(); j++)
-		{
-			if (l[i][j] == 0)
-			{
-				for (unsigned k = 0; k < l.getNrRanduriVip(); k++)
-				{
-					if (b.getIsStandard() && i != l.getRanduriVip()[k])
-						l[i][j] = 1;
-					if (!b.getIsStandard() && i == l.getRanduriVip()[k])
-						l[i][j] = 1;
-				}
-			}
-		}
-	}
+	l[this->rand][this->loc] = 1;
 }
 
 float Bilet::getPretFinal()
 {
 	if (this->isStandard)
-		return this->eveniment->getPretBilet();
-	else return this->eveniment->getPretBilet() * 1.5;
+		return (float)*this->eveniment;
+	else return (float)*this->eveniment * 1.5f;
 }

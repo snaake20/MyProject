@@ -42,6 +42,12 @@ public:
 	void setDate(const unsigned day, const unsigned month, const unsigned year);
 	Locatie* getLocatie();
 	void setLocatie(Locatie& l);
+	static unsigned getNrEvenimente();
+	static void setNrEvenimente(const unsigned nrEvenimente);
+
+	//general methods
+	unsigned getNrLocuriDisponibileStandard();
+	unsigned getNrLocuriDisponibileSpeciale();
 	
 	//preincrement and postincrement -> reprogramare spectacol cu o zi
 	Eveniment& operator++();

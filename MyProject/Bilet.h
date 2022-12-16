@@ -2,10 +2,11 @@
 #include <iostream>
 #include <string>
 #include "Eveniment.h"
+#include "CiD.h"
 
 class Bilet {
 private:
-	const int id;
+	const std::string id;
 	unsigned rand;
 	unsigned loc;
 	bool isStandard;
@@ -45,8 +46,7 @@ public:
 	
 	//generalMethods
 	float getPretFinal();
-	void ocupaLoc(Locatie l, Bilet b);
-	void elibereazaLoc(Locatie l, Bilet b);
-	static bool isSeatAvailable(Locatie l, Bilet b);
+	void ocupaLoc(Locatie l);
+	void elibereazaLoc(Locatie l);
 
 };

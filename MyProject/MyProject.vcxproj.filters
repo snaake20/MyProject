@@ -36,6 +36,9 @@
     <ClCompile Include="Locatie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CiD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bilet.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Locatie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CiD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

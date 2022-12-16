@@ -2,6 +2,7 @@
 #include "Bilet.h"
 #include "Eveniment.h"
 #include "Locatie.h"
+#include "CiD.h"
 
 int main()
 {
@@ -47,6 +48,8 @@ int main()
     system("CLS");
 
     std::cout << l;
+    
+    std::cout << CiD::generateCiD() << std::endl;
     
     return 0;
 }

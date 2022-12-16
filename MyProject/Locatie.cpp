@@ -263,6 +263,11 @@ char** Locatie::getZone() const
 	return temp;
 }
 
+unsigned Locatie::getNrLocatii()
+{
+	return Locatie::nrLocatii;
+}
+
 void Locatie::setNumeLocatie(const std::string numeLocatie)
 {
 	if (!numeLocatie.empty())
@@ -302,6 +307,12 @@ void Locatie::setZone(const char** zone)
 {
 	if (zone != nullptr && nrRanduri > 0 && nrLocuri > 0)
 		Utils::copy2DChar(this->zone, (char**)zone, this->nrRanduri, this->nrLocuri);
+}
+
+void Locatie::setNrLocatii(const unsigned nrLocatii)
+{
+	if (nrLocatii > 0)
+		Locatie::nrLocatii = nrLocatii;
 }
 
 void Locatie::setDefaultDisponibilitate()

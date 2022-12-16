@@ -121,6 +121,43 @@ void Eveniment::setLocatie(Locatie& l)
 		this->locatie = &l;
 }
 
+unsigned Eveniment::getNrEvenimente()
+{
+	return Eveniment::nrEvenimente;
+}
+
+void Eveniment::setNrEvenimente(const unsigned nrEvenimente)
+{
+	if (nrEvenimente > 0) 
+		Eveniment::nrEvenimente = nrEvenimente;
+}
+
+unsigned Eveniment::getNrLocuriDisponibileStandard()
+{
+	unsigned acc = 0;
+	for (unsigned i = 0; i < locatie->getNrRanduri(); i++) {
+		for (unsigned j = 0; j < locatie->getNrLocuri(); j++) {
+			if ((locatie->getZone()[i][j] == '1' || locatie->getZone()[i][j] == '2') && *locatie[i][j] == 1) {
+				acc++;
+			}
+		}
+	}
+	return acc;
+}
+
+unsigned Eveniment::getNrLocuriDisponibileSpeciale()
+{
+	unsigned acc = 0;
+	for (unsigned i = 0; i < locatie->getNrRanduri(); i++) {
+		for (unsigned j = 0; j < locatie->getNrLocuri(); j++) {
+			if (locatie->getZone()[i][j] == 'S' && *locatie[i][j] == 1) {
+				acc++;
+			}
+		}
+	}
+	return acc;
+}
+
 Eveniment& Eveniment::operator++()
 {
 	this->date->setDay(this->date->getDay() + 1);
