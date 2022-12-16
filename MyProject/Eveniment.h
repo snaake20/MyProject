@@ -1,19 +1,24 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Locatie.h"
 #include "Time.h"
 #include "Date.h"
 
 class Eveniment
 {
 private:
+	static unsigned nrEvenimente;
+	const unsigned idEveniment;
 	char* denumireEveniment;
+	float pretBilet;
+	Locatie* locatie;
 	Time* time;
 	Date* date;
 public:
 	//constructors
 	Eveniment();
-	Eveniment(const char* denumireEveniment, Time& t, Date& d);
+	Eveniment(const char* denumireEveniment, const float pretBilet, Locatie& l, Time& t, Date& d);
 
 	//copy constructor and destructor
 	Eveniment(Eveniment& e);
@@ -29,14 +34,21 @@ public:
 	//getters and setters
 	char* getDenumireEveniment();
 	void setDenumireEveniment(const char* denumireEveniment);
+	float getPretBilet();
+	void setPretBilet(const float pretBilet);
 	Time getTime();
 	void setTime(const unsigned hour, const unsigned minute);
 	Date getDate();
 	void setDate(const unsigned day, const unsigned month, const unsigned year);
+	Locatie* getLocatie();
+	void setLocatie(Locatie& l);
 	
-	//preincrement and postincrement
-	Eveniment& operator++(); //reprogramare spectacol
-	Eveniment operator++(int); //reprogramare spectacol
+	//preincrement and postincrement -> reprogramare spectacol cu o zi
+	Eveniment& operator++();
+	Eveniment operator++(int);
+
+	//cast operator to float returns pretBilet
+	explicit operator float();
 
 };
 

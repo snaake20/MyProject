@@ -1,6 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Utils.h"
 #include <ctime>
+#include <iostream>
+#include <string>
 
 void Utils::allocChar(char*& dest, const char* src)
 {
@@ -33,6 +35,9 @@ void Utils::allocArray(unsigned*& dest, unsigned* src, const unsigned size)
 			dest[i] = src[i];
 		}
 	}
+	else {
+		dest = nullptr;
+	}
 }
 
 void Utils::alloc2DChar(char**& dest, char** src, const unsigned rows, const unsigned cols)
@@ -62,6 +67,9 @@ void Utils::copy2DChar(char**& dest, char** src, const unsigned rows, const unsi
 			}
 		}
 	}
+	else {
+		dest = nullptr;
+	}
 }
 
 void Utils::dealloc2DChar(char**& dest, const unsigned rows)
@@ -84,6 +92,9 @@ void Utils::copyArray(unsigned*& dest, const unsigned* src, const unsigned size)
 			dest[i] = src[i];
 		}
 	}
+	else {
+		dest = nullptr;
+	}
 }
 
 void Utils::deallocArray(unsigned*& dest)
@@ -104,6 +115,9 @@ void Utils::alloc2DArray(unsigned**& dest, unsigned** src, const unsigned rows, 
 				dest[i][j] = src[i][j];
 			}
 		}
+	}
+	else {
+		dest = nullptr;
 	}
 }
 
@@ -174,4 +188,37 @@ std::tm* Utils::getCurrentDate() {
 	std::time_t t = std::time(0);
 	std::tm* now = std::localtime(&t);
 	return now;
+}
+
+unsigned Utils::requireUnsigned(const char* message)
+{
+	unsigned temp;
+	std::cin >> temp;
+	while (temp < 1) {
+		std::cout << message;
+		std::cin >> temp;
+	}
+	return temp;
+}
+
+float Utils::requireFloat(const char* message)
+{
+	float temp;
+	std::cin >> temp;
+	while (temp < 0) {
+		std::cout << message;
+		std::cin >> temp;
+	}
+	return temp;
+}
+
+std::string Utils::requireString(const char* message)
+{
+	std::string buffer;
+	std::getline(std::cin,buffer);
+	while (buffer.empty()) {
+		std::cout << message;
+		std::cin >> buffer;
+	}
+	return buffer;
 }

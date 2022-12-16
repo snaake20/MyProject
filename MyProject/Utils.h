@@ -31,5 +31,10 @@ public:
 	//date related
 	static bool validateDate(const unsigned day, const unsigned month, const unsigned year);
 	static std::tm* getCurrentDate();
+
+	//require imput
+	static unsigned requireUnsigned(const char* message);
+	static float requireFloat(const char* message);
+	static std::string requireString(const char* message);
 };
 

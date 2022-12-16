@@ -1,26 +1,35 @@
 #include "Eveniment.h"
 #include "Utils.h"
 
-Eveniment::Eveniment() {
+unsigned Eveniment::nrEvenimente = 1;
+
+Eveniment::Eveniment():idEveniment(nrEvenimente) {
 	denumireEveniment = nullptr;
+	pretBilet = 0.f;
+	locatie = nullptr;
 	time = nullptr;
 	date = nullptr;
 }
 
-Eveniment::Eveniment(const char* denumireEveniment, Time& t, Date& d) {
+Eveniment::Eveniment(const char* denumireEveniment, const float pretBilet, Locatie& l, Time& t, Date& d):idEveniment(nrEvenimente) {
 	Utils::reallocChar(this->denumireEveniment, denumireEveniment);
+	this->pretBilet = pretBilet;
+	this->locatie = &l;
 	this->time = new Time(t);
 	this->date = new Date(d);
 }
 
-Eveniment::Eveniment(Eveniment& e) {
+Eveniment::Eveniment(Eveniment& e):idEveniment(e.idEveniment) {
 	Utils::allocChar(this->denumireEveniment, e.denumireEveniment);
+	this->pretBilet = e.pretBilet;
+	this->locatie = e.locatie;
 	this->time = new Time(*e.time);
 	this->date = new Date(*e.date);
 }
 
 Eveniment::~Eveniment() {
 	Utils::deallocChar(this->denumireEveniment);
+	locatie = nullptr;
 	delete time;
 	delete date;
 }
@@ -28,6 +37,8 @@ Eveniment::~Eveniment() {
 Eveniment& Eveniment::operator=(Eveniment& e) {
 	if (this != &e) {
 		Utils::reallocChar(this->denumireEveniment, e.denumireEveniment);
+		this->pretBilet = e.pretBilet;
+		this->locatie = e.locatie;
 		this->time = new Time(*e.time);
 		this->date = new Date(*e.date);
 	}
@@ -36,6 +47,8 @@ Eveniment& Eveniment::operator=(Eveniment& e) {
 
 std::ostream& operator<<(std::ostream& out, const Eveniment e) {
 	out << e.denumireEveniment << std::endl;
+	out << e.pretBilet << std::endl;
+	out << *e.locatie << std::endl;
 	out << *e.time << std::endl;
 	out << *e.date << std::endl;
 	return out;
@@ -44,8 +57,11 @@ std::ostream& operator<<(std::ostream& out, const Eveniment e) {
 std::istream& operator>>(std::istream& in, Eveniment& e) {
 	std::string buffer;
 	std::cout << "Introduceti denumirea evenimentului: ";
-	std::getline(in, buffer);
+	buffer = Utils::requireString("Denumirea evenimentului nu poate fi vida! Reintroduceti denumirea evenimentului: ");
 	Utils::reallocChar(e.denumireEveniment, buffer.c_str());
+	std::cout << "Introduceti pretul biletului: ";
+	e.pretBilet = Utils::requireFloat("Pretul biletului trebuie sa fie un numar pozitiv! Reintroduceti pretul biletului: ");
+	in >> *e.locatie;
 	in >> *e.time;
 	in >> *e.date;
 	return in;
@@ -59,6 +75,18 @@ char* Eveniment::getDenumireEveniment() {
 
 void Eveniment::setDenumireEveniment(const char* denumireEveniment) {
 	Utils::reallocChar(this->denumireEveniment, denumireEveniment);
+}
+
+float Eveniment::getPretBilet()
+{
+	return this->pretBilet;
+}
+
+void Eveniment::setPretBilet(const float pretBilet)
+{
+	if (pretBilet > 0.f) {
+		this->pretBilet = pretBilet;
+	}
 }
 
 Time Eveniment::getTime() {
@@ -82,6 +110,17 @@ void Eveniment::setDate(const unsigned day, const unsigned month, const unsigned
 	this->date->setYear(year);
 }
 
+Locatie* Eveniment::getLocatie()
+{
+	return this->locatie;
+}
+
+void Eveniment::setLocatie(Locatie& l)
+{
+	if (&l != nullptr) 
+		this->locatie = &l;
+}
+
 Eveniment& Eveniment::operator++()
 {
 	this->date->setDay(this->date->getDay() + 1);
@@ -93,4 +132,9 @@ Eveniment Eveniment::operator++(int)
 	Eveniment copy = *this;
 	this->date->setDay(this->date->getDay() + 1);
 	return copy;
+}
+
+Eveniment::operator float()
+{
+	return this->pretBilet;
 }
