@@ -9,6 +9,17 @@ Eveniment::Eveniment():idEveniment(nrEvenimente) {
 	locatie = nullptr;
 	time = nullptr;
 	date = nullptr;
+	nrEvenimente++;
+}
+
+Eveniment::Eveniment(Locatie& l):idEveniment(nrEvenimente)
+{
+	denumireEveniment = nullptr;
+	pretBilet = 0.f;
+	locatie = new Locatie(l);
+	time = nullptr;
+	date = nullptr;
+	nrEvenimente++;
 }
 
 Eveniment::Eveniment(const char* denumireEveniment, const float pretBilet, Locatie& l, Time& t, Date& d):idEveniment(nrEvenimente) {
@@ -17,6 +28,7 @@ Eveniment::Eveniment(const char* denumireEveniment, const float pretBilet, Locat
 	this->locatie = &l;
 	this->time = new Time(t);
 	this->date = new Date(d);
+	nrEvenimente++;
 }
 
 Eveniment::Eveniment(Eveniment& e):idEveniment(e.idEveniment) {
@@ -46,11 +58,21 @@ Eveniment& Eveniment::operator=(Eveniment& e) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Eveniment e) {
-	out << e.denumireEveniment << std::endl;
-	out << e.pretBilet << std::endl;
-	out << *e.locatie << std::endl;
+	if (e.denumireEveniment != nullptr) {
+		out << "Denumire eveniment: " << e.denumireEveniment << std::endl;
+	}
+	else {
+		out << "Denumire eveniment: " << "N/A" << std::endl;
+	}
+	if (e.pretBilet != 0.f) {
+		out << "Pret bilet: " << e.pretBilet << std::endl;
+	}
+	else {
+		out << "Pret bilet: " << "N/A" << std::endl;
+	}
 	out << *e.time << std::endl;
 	out << *e.date << std::endl;
+	out << *e.locatie << std::endl;
 	return out;
 }
 
@@ -61,9 +83,9 @@ std::istream& operator>>(std::istream& in, Eveniment& e) {
 	Utils::reallocChar(e.denumireEveniment, buffer.c_str());
 	std::cout << "Introduceti pretul biletului: ";
 	e.pretBilet = Utils::requireFloat("Pretul biletului trebuie sa fie un numar pozitiv! Reintroduceti pretul biletului: ");
-	in >> *e.locatie;
 	in >> *e.time;
 	in >> *e.date;
+	//in >> *e.locatie;
 	return in;
 }
 
@@ -110,7 +132,12 @@ void Eveniment::setDate(const unsigned day, const unsigned month, const unsigned
 	this->date->setYear(year);
 }
 
-Locatie* Eveniment::getLocatie()
+Locatie Eveniment::getLocatie()
+{
+	return *this->locatie;
+}
+
+Locatie* Eveniment::getLocatieToModify()
 {
 	return this->locatie;
 }
@@ -137,7 +164,7 @@ unsigned Eveniment::getNrLocuriDisponibileStandard()
 	unsigned acc = 0;
 	for (unsigned i = 0; i < locatie->getNrRanduri(); i++) {
 		for (unsigned j = 0; j < locatie->getNrLocuri(); j++) {
-			if ((locatie->getZone()[i][j] == '1' || locatie->getZone()[i][j] == '2') && *locatie[i][j] == 1) {
+			if ((locatie->getZone()[i][j] == '1' || locatie->getZone()[i][j] == '2') && this->getLocatie()[i][j] == 1) {
 				acc++;
 			}
 		}
@@ -150,7 +177,7 @@ unsigned Eveniment::getNrLocuriDisponibileSpeciale()
 	unsigned acc = 0;
 	for (unsigned i = 0; i < locatie->getNrRanduri(); i++) {
 		for (unsigned j = 0; j < locatie->getNrLocuri(); j++) {
-			if (locatie->getZone()[i][j] == 'S' && *locatie[i][j] == 1) {
+			if (locatie->getZone()[i][j] == 'S' && this->getLocatie()[i][j] == 1) {
 				acc++;
 			}
 		}

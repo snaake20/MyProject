@@ -2,7 +2,6 @@
 #include "Bilet.h"
 #include "Eveniment.h"
 #include "Locatie.h"
-#include "CiD.h"
 
 int main()
 {
@@ -14,31 +13,21 @@ int main()
 
     Locatie l("Baneasa", 20, 4);
     
-    //Eveniment eveniment_cool((const char*)"Strip club", l, t, d);
+    Eveniment eveniment_cool((const char*)"Strip club", 2, l, t, d);
 
 
-    //std::cout << eveniment_cool << std::endl;
+    /*std::cout << eveniment_cool << std::endl;
 
-    /*++eveniment_cool;
+    ++eveniment_cool;
 
-    std::cout << eveniment_cool << std::endl;
+    std::cout << eveniment_cool << std::endl;*/
 
-    Bilet b(2, 3, true, eveniment_cool);
-
-    std::cout << b << std::endl;
-
-    std::cin >> eveniment_cool;
+    //std::cout << eveniment_cool.getLocatie()[1][2];
     
-    std::cout << b << std::endl;*/
-    
-    
-    std::cout << l << std::endl;
-    
-    
+    Bilet b(eveniment_cool);
+
     l + 2;
     
-	std::cout << l << std::endl;
-
     unsigned* test = new unsigned[2];
     test[0] = 2;
     test[1] = 4;
@@ -47,9 +36,14 @@ int main()
     
     system("CLS");
 
-    std::cout << l;
-    
-    std::cout << CiD::generateCiD() << std::endl;
+    std::cin >> b;
+
+    std::cout << b;
+
+    b.renuntareBilet();
+
+    std::cout << b;
+
     
     return 0;
 }

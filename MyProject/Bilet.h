@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include "Eveniment.h"
-#include "CiD.h"
 
 class Bilet {
 private:
@@ -15,6 +14,7 @@ private:
 public:
 	//constructors
 	Bilet();
+	Bilet(Eveniment& eveniment);
 	Bilet(const unsigned rand, const unsigned loc, const bool isStandard, Eveniment& eveniment);
 
 	//copy constructor and destructor
@@ -46,7 +46,7 @@ public:
 	
 	//generalMethods
 	float getPretFinal();
-	void ocupaLoc(Locatie l);
-	void elibereazaLoc(Locatie l);
+	void confirmareBilet();
+	void renuntareBilet();
 
 };

@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bilet.cpp" />
-    <ClCompile Include="CiD.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Locatie.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -138,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bilet.h" />
-    <ClInclude Include="CiD.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Locatie.h" />
     <ClInclude Include="Time.h" />

@@ -47,7 +47,7 @@ std::istream& operator>>(std::istream& in, Time& t) {
 
 std::ostream& operator<<(std::ostream& out, const Time t) {
 	out << "Ora: " << t.hour << std::endl;
-	out << "Minut: " << t.minute << std::endl;
+	out << "Minut: " << t.minute;
 	return out;
 }
 

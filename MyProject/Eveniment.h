@@ -18,6 +18,7 @@ private:
 public:
 	//constructors
 	Eveniment();
+	Eveniment(Locatie& l);
 	Eveniment(const char* denumireEveniment, const float pretBilet, Locatie& l, Time& t, Date& d);
 
 	//copy constructor and destructor
@@ -40,7 +41,8 @@ public:
 	void setTime(const unsigned hour, const unsigned minute);
 	Date getDate();
 	void setDate(const unsigned day, const unsigned month, const unsigned year);
-	Locatie* getLocatie();
+	Locatie getLocatie();
+	Locatie* getLocatieToModify();
 	void setLocatie(Locatie& l);
 	static unsigned getNrEvenimente();
 	static void setNrEvenimente(const unsigned nrEvenimente);

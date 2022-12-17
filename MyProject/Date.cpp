@@ -61,7 +61,7 @@ std::istream& operator>>(std::istream& in, Date& d) {
 std::ostream& operator<<(std::ostream& out, const Date d) {
 	out << "Zi: " << d.day << std::endl;
 	out << "Luna: " << d.month << std::endl;
-	out << "An: " << d.year << std::endl;
+	out << "An: " << d.year;
 	return out;
 }
 

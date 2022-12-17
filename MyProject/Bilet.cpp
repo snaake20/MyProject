@@ -1,14 +1,22 @@
 #include "Bilet.h"
 #include "Utils.h"
 
-Bilet::Bilet():id(CiD::generateCiD()) {
+Bilet::Bilet():id("0") {
 	rand = 0;
 	loc = 0;
 	isStandard = true;
 	eveniment = nullptr;
 }
 
-Bilet::Bilet(const unsigned rand, const unsigned loc, const bool isStandard, Eveniment& eveniment): id(CiD::generateCiD())
+Bilet::Bilet(Eveniment& eveniment):id("0")
+{
+	rand = 0;
+	loc = 0;
+	isStandard = true;
+	this->eveniment = &eveniment;
+}
+
+Bilet::Bilet(const unsigned rand, const unsigned loc, const bool isStandard, Eveniment& eveniment):id("0")
 {
 	this->rand = rand;
 	this->loc = loc;
@@ -40,25 +48,78 @@ Bilet& Bilet::operator=(const Bilet& b)
 }
 
 std::istream& operator>> (std::istream& in, Bilet& b) {
-	std::cout << "Nr rand: ";
-	in >> b.rand;
-	std::cout << "Loc: ";
-	in >> b.loc;
+
+	unsigned tempRand, tempLoc;
+	bool tempIsStandard;
+	
+	if (b.eveniment->getLocatie().afisareNrLocuriDisponibile() == 0) {
+		std::cout << "Nu mai sunt locuri disponibile la acest eveniment!" << std::endl;
+		return in;
+	}
+
+	b.eveniment->getLocatie().afisareDisponibilitateLocuriSiZone();
+	
+	
+	std::cout << "Nr. locuri standard: " << b.eveniment->getNrLocuriDisponibileStandard() << " nr. locuri speciale: " << b.eveniment->getNrLocuriDisponibileSpeciale() << " total: " << b.eveniment->getLocatie().afisareNrLocuriDisponibile() << std::endl;
+	
 	std::cout << "Biletul este standard: (1/0) ";
-	in >> b.isStandard;
-	std::cout << "Eveniment: ";
-	in >> *b.eveniment;
+	in >> tempIsStandard;
+
+	if (!b.eveniment->getNrLocuriDisponibileSpeciale() && tempIsStandard == 0)
+	{
+		bool raspuns;
+		std::cout << "Nu mai exista locuri speciale. Doriti unul standard? (1/0)" << std::endl;
+		in >> raspuns;
+		if (!raspuns) {
+			return in;
+		}
+		tempIsStandard = true;
+	}
+	if (!b.eveniment->getNrLocuriDisponibileStandard() && tempIsStandard == 1)
+	{
+		bool raspuns;
+		std::cout << "Nu mai exista locuri standard. Doriti unul special? (1/0)" << std::endl;
+		in >> raspuns;
+		if (!raspuns) {
+			return in;
+		}
+		tempIsStandard = false;
+	}
+	
+	std::cout << "Nr rand: ";
+	in >> tempRand;
+	while (tempRand - 1 < 1 || tempRand - 1 > b.eveniment->getLocatie().getNrRanduri() || b.eveniment->getLocatie().isRandStandard(tempRand - 1) != tempIsStandard || b.eveniment->getLocatie().getNrLocuriRand(tempRand - 1) == 0) {
+		std::cout << "Randul introdus nu este valid. Introduceti un rand valid: ";
+		in >> tempRand;
+	}
+	
+	std::cout << "Loc: ";
+	in >> tempLoc;
+	while (tempLoc - 1 < 1 || tempLoc - 1 > b.eveniment->getLocatie().getNrLocuri() || b.eveniment->getLocatie()[tempRand - 1][tempLoc - 1] == 0) {
+		std::cout << "Randul introdus nu este valid. Introduceti un rand valid: ";
+		in >> tempLoc;
+	}
+
+
+	b.rand = tempRand;
+	b.loc = tempLoc;
+	b.isStandard = tempIsStandard;
+	
+	b.confirmareBilet();
+	
+	
+	/*std::cout << "Eveniment: ";
+	in >> *b.eveniment;*/
 
 	return in;
 }
 
 std::ostream& operator<< (std::ostream& out, const Bilet b) {
-
 	out << "Id bilet: " << b.id << std::endl;
 	out << "Rand: " << b.rand << std::endl;
 	out << "Loc: " << b.loc << std::endl;
 	out << "Tipul biletului: " << (b.isStandard == true ? "Standard" : "Special") << std::endl;
-	out << "Eveniment: " << *b.eveniment;
+	out << *b.eveniment;
 	
 	return out;
 }
@@ -114,23 +175,12 @@ void Bilet::setEveniment(Eveniment& eveniment)
 		this->eveniment = &eveniment;
 }
 
-void Bilet::ocupaLoc(Locatie l)
-{
-	if (l[this->rand][this->loc] == 1)
-	{
-		for (unsigned k = 0; k < l.getNrRanduriVip(); k++)
-		{
-			if (this->isStandard && this->rand != l.getRanduriVip()[k])
-				l[this->rand][this->loc] = 0;
-			if (!this->isStandard && this->rand == l.getRanduriVip()[k])
-				l[this->rand][this->loc] = 0;
-		}
-	}
+void Bilet::confirmareBilet() {
+	this->eveniment->getLocatieToModify()->ocupaLoc(rand, loc);
 }
 
-void Bilet::elibereazaLoc(Locatie l)
-{
-	l[this->rand][this->loc] = 1;
+void Bilet::renuntareBilet() {
+	this->eveniment->getLocatieToModify()->elibereazaLoc(rand, loc);
 }
 
 float Bilet::getPretFinal()

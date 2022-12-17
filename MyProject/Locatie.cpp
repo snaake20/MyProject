@@ -126,7 +126,8 @@ std::istream& operator>>(std::istream& in, Locatie& l)
 	
 	l.setDefaultDisponibilitate();
 	l.setDefaultZone();
-	l.setZonaVip();
+	if (l.randuriVip && l.nrRanduriVip > 0)
+		l.setZonaVip();
 
 	return in;
 }
@@ -150,7 +151,7 @@ std::ostream& operator<<(std::ostream& out, const Locatie l)
 		{
 			for (unsigned j = 0; j < l.nrLocuri; j++)
 			{
-				out << "Rand: " << i + 1 << " loc: " << j + 1 << (l.disponibilitateLocuri[i][j] == 1 ? "Disponibil" : "Ocupat") << " ";
+				out << l.disponibilitateLocuri[i][j] << " ";
 			}
 			out << std::endl;
 		}
@@ -219,6 +220,14 @@ Locatie& Locatie::operator+(const unsigned nrRanduri)
 //return the row at index
 unsigned* Locatie::operator[](const int index)
 {
+	if (this->disponibilitateLocuri == nullptr) {
+		std::cout << "Disponibilitatea locatiei nu a fost stabilita" << std::endl;
+		return nullptr;
+	}
+	if (index < 0 || index >= this->nrRanduri) {
+		std::cout << "Index invalid" << std::endl;
+		return nullptr;
+	}
 	return this->disponibilitateLocuri[index];
 }
 
@@ -276,12 +285,14 @@ void Locatie::setNumeLocatie(const std::string numeLocatie)
 
 void Locatie::setNrLocuri(const unsigned nrLocuri)
 {
-	this->nrLocuri = nrLocuri;
+	if (nrLocuri > 0)
+		this->nrLocuri = nrLocuri;
 }
 
 void Locatie::setNrRanduri(const unsigned nrRanduri)
 {
-	this->nrRanduri = nrRanduri;
+	if (nrRanduri > 0)
+		this->nrRanduri = nrRanduri;
 }
 
 void Locatie::setRanduriVip(const unsigned* randuriVip, const unsigned nrRanduriVip)
@@ -292,7 +303,7 @@ void Locatie::setRanduriVip(const unsigned* randuriVip, const unsigned nrRanduri
 			delete[] this->randuriVip;
 		this->randuriVip = new unsigned[this->nrRanduriVip];
 		for (unsigned i = 0; i < this->nrRanduriVip; i++)
-			this->randuriVip[i] = randuriVip[i];
+			this->randuriVip[i] = randuriVip[i] - 1;
 		this->setZonaVip();
 	}
 }
@@ -352,6 +363,10 @@ void Locatie::setDefaultZone()
 
 void Locatie::setZonaVip()
 {
+	if (this->randuriVip == nullptr || this->nrRanduriVip == 0) {
+		std::cout << "Nu ati specificat randurile VIP pentru aceasta locatie" << std::endl;
+		return;
+	}
 	for (unsigned i = 0; i < nrRanduriVip; i++)
 	{
 		for (unsigned j = 0; j < nrLocuri; j++)
@@ -373,4 +388,56 @@ unsigned Locatie::afisareNrLocuriDisponibile()
 		}
 	}
 	return acc;
+}
+
+void Locatie::ocupaLoc(const unsigned rand, const unsigned loc)
+{
+	this->disponibilitateLocuri[rand][loc] = 0;
+}
+
+void Locatie::elibereazaLoc(const unsigned rand, const unsigned loc)
+{
+	this->disponibilitateLocuri[rand][loc] = 1;
+}
+
+bool Locatie::isRandStandard(const unsigned rand)
+{
+	for (unsigned i = 0; i < this->nrRanduriVip; i++)
+	{
+		if (rand == this->randuriVip[i])
+			return false;
+	}
+	return true;
+}
+
+unsigned Locatie::getNrLocuriRand(const unsigned rand)
+{
+	unsigned acc = 0;
+	for (unsigned i = 0; i < this->nrLocuri; i++)
+	{
+		if (this->disponibilitateLocuri[rand][i] == 1)
+			acc++;
+	}
+	return acc;
+}
+
+void Locatie::afisareDisponibilitateLocuriSiZone() {
+	std::cout << "Disponibilitate locuri: " << std::endl;
+	for (unsigned i = 0; i < this->nrRanduri; i++)
+	{
+		for (unsigned j = 0; j < this->nrLocuri; j++)
+		{
+			std::cout << this->disponibilitateLocuri[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "Zone: " << std::endl;
+	for (unsigned i = 0; i < this->nrRanduri; i++)
+	{
+		for (unsigned j = 0; j < this->nrLocuri; j++)
+		{
+			std::cout << this->zone[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
 }

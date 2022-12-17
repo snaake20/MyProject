@@ -59,5 +59,11 @@ public:
 	void setDefaultZone();
 	void setZonaVip();
 	unsigned afisareNrLocuriDisponibile();
+	void ocupaLoc(const unsigned rand, const unsigned loc);
+	void elibereazaLoc(const unsigned rand, const unsigned loc);
+	bool isRandStandard(const unsigned rand);
+	unsigned getNrLocuriRand(const unsigned rand);
+	
+	void afisareDisponibilitateLocuriSiZone();
 
 };
