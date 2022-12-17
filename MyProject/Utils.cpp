@@ -1,8 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Utils.h"
+#include <cstdlib>
 #include <ctime>
-#include <iostream>
-#include <string>
 
 void Utils::allocChar(char*& dest, const char* src)
 {
@@ -221,4 +220,44 @@ std::string Utils::requireString(const char* message)
 		std::cin >> buffer;
 	}
 	return buffer;
+}
+
+std::string Utils::generateId()
+{
+	std::string caracterePosibile = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	tm* timeinfo = Utils::getCurrentDate();
+	unsigned sec = timeinfo->tm_sec;
+	srand(time(NULL));
+	std::string uuid = "";
+	for (int i = 0; i < 8; i++)
+	{
+		uuid += caracterePosibile[rand() % caracterePosibile.length()];
+	}
+	uuid += "-";
+	for (int i = 0; i < 4; i++)
+	{
+		uuid += caracterePosibile[rand() % caracterePosibile.length()];
+	}
+	uuid += "-";
+	for (int i = 0; i < 4; i++)
+	{
+		uuid += caracterePosibile[rand() % caracterePosibile.length()];
+	}
+	uuid += "-";
+	for (int i = 0; i < 4; i++)
+	{
+		uuid += caracterePosibile[rand() % caracterePosibile.length()];
+	}
+	uuid += "-";
+	for (int i = 0; i < 12; i++)
+	{
+		uuid += caracterePosibile[rand() % caracterePosibile.length()];
+	}
+	std::cout << "Generare id bilet ... (takes about <1 sec)" << std::endl;
+	while (true) { //general sleep to get random ids everytime
+		if (sec != Utils::getCurrentDate()->tm_sec)
+			break;
+	}
+	system("CLS");
+	return uuid;
 }

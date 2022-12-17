@@ -218,13 +218,13 @@ Locatie& Locatie::operator+(const unsigned nrRanduri)
 }
 
 //return the row at index
-unsigned* Locatie::operator[](const int index)
+unsigned* Locatie::operator[](const unsigned index)
 {
 	if (this->disponibilitateLocuri == nullptr) {
 		std::cout << "Disponibilitatea locatiei nu a fost stabilita" << std::endl;
 		return nullptr;
 	}
-	if (index < 0 || index >= this->nrRanduri) {
+	if (index < 0 || index > this->nrRanduri) {
 		std::cout << "Index invalid" << std::endl;
 		return nullptr;
 	}

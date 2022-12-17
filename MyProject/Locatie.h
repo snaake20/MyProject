@@ -35,7 +35,7 @@ public:
 	Locatie& operator+(const unsigned nrRanduri);
 	
 	//operator[]
-	unsigned* operator[](const int index);
+	unsigned* operator[](const unsigned index);
 
 	//getters and setters
 	std::string getNumeLocatie() const;

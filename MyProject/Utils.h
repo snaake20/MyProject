@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 class Utils
 {
@@ -36,5 +37,6 @@ public:
 	static unsigned requireUnsigned(const char* message);
 	static float requireFloat(const char* message);
 	static std::string requireString(const char* message);
+	static std::string generateId();
 };
 

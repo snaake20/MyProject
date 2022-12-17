@@ -1,14 +1,14 @@
 #include "Bilet.h"
 #include "Utils.h"
 
-Bilet::Bilet():id("0") {
+Bilet::Bilet():id(Utils::generateId()) {
 	rand = 0;
 	loc = 0;
 	isStandard = true;
 	eveniment = nullptr;
 }
 
-Bilet::Bilet(Eveniment& eveniment):id("0")
+Bilet::Bilet(Eveniment& eveniment):id(Utils::generateId())
 {
 	rand = 0;
 	loc = 0;
@@ -16,7 +16,7 @@ Bilet::Bilet(Eveniment& eveniment):id("0")
 	this->eveniment = &eveniment;
 }
 
-Bilet::Bilet(const unsigned rand, const unsigned loc, const bool isStandard, Eveniment& eveniment):id("0")
+Bilet::Bilet(const unsigned rand, const unsigned loc, const bool isStandard, Eveniment& eveniment):id(Utils::generateId())
 {
 	this->rand = rand;
 	this->loc = loc;
