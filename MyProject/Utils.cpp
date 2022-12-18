@@ -28,7 +28,7 @@ void Utils::deallocChar(char*& dest) {
 
 void Utils::allocArray(unsigned*& dest, unsigned* src, const unsigned size)
 {
-	if (size > 0) {
+	if (size > 0 && src != nullptr) {
 		dest = new unsigned[size];
 		for (unsigned i = 0; i < size; i++) {
 			dest[i] = src[i];
@@ -41,7 +41,7 @@ void Utils::allocArray(unsigned*& dest, unsigned* src, const unsigned size)
 
 void Utils::alloc2DChar(char**& dest, char** src, const unsigned rows, const unsigned cols)
 {
-	if (rows > 0 && cols > 0) {
+	if (rows > 0 && cols > 0 && src != nullptr) {
 		dest = new char* [rows];
 		for (unsigned i = 0; i < rows; i++) {
 			dest[i] = new char[cols];
@@ -51,11 +51,14 @@ void Utils::alloc2DChar(char**& dest, char** src, const unsigned rows, const uns
 			}
 		}
 	}
+	else {
+		dest = nullptr;
+	}
 }
 
 void Utils::copy2DChar(char**& dest, char** src, const unsigned rows, const unsigned cols)
 {
-	if (rows > 0 && cols > 0) {
+	if (rows > 0 && cols > 0 && src != nullptr) {
 		Utils::dealloc2DChar(dest, rows);
 		dest = new char* [rows];
 		for (unsigned i = 0; i < rows; i++) {
@@ -84,7 +87,7 @@ void Utils::dealloc2DChar(char**& dest, const unsigned rows)
 
 void Utils::copyArray(unsigned*& dest, const unsigned* src, const unsigned size)
 {
-	if (size > 0) {
+	if (size > 0 && src != nullptr) {
 		Utils::deallocArray(dest);
 		dest = new unsigned[size];
 		for (unsigned i = 0; i < size; i++) {
@@ -106,7 +109,7 @@ void Utils::deallocArray(unsigned*& dest)
 
 void Utils::alloc2DArray(unsigned**& dest, unsigned** src, const unsigned rows, const unsigned cols)
 {
-	if (rows > 0 && cols > 0) {
+	if (rows > 0 && cols > 0 && src != nullptr) {
 		dest = new unsigned* [rows];
 		for (unsigned i = 0; i < rows; i++) {
 			dest[i] = new unsigned[cols];
@@ -122,7 +125,7 @@ void Utils::alloc2DArray(unsigned**& dest, unsigned** src, const unsigned rows, 
 
 void Utils::copy2DArray(unsigned**& dest, const unsigned** src, const unsigned rows, const unsigned cols)
 {
-	if (rows > 0 && cols > 0) {
+	if (rows > 0 && cols > 0 && src != nullptr) {
 		Utils::dealloc2DArray(dest, rows);
 		dest = new unsigned* [rows];
 		for (unsigned i = 0; i < rows; i++) {
@@ -131,6 +134,9 @@ void Utils::copy2DArray(unsigned**& dest, const unsigned** src, const unsigned r
 				dest[i][j] = src[i][j];
 			}
 		}
+	}
+	else {
+		dest = nullptr;
 	}
 }
 
