@@ -62,7 +62,7 @@ std::istream& operator>>(std::istream& in, Date& d) {
 		in >> day;
 	}
 	while (!Utils::validateDate(day, month, year)) {
-		std::cout << "Ati introdus o data invalida! Reintroduceti:" << std::endl;
+		std::cout << "Ati introdus o data invalida! (" << day << month << year << ") Reintroduceti:" << std::endl;
 		std::cout << "ziua: ";
 		in >> day;
 		while (in.fail() || day < 1 || day > 31) {
