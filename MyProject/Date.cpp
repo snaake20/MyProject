@@ -39,18 +39,54 @@ std::istream& operator>>(std::istream& in, Date& d) {
 	unsigned day, month, year;
 	std::cout << "Introduceti ziua: ";
 	in >> day;
+	while (in.fail() || day < 1 || day > 31) {
+		in.clear();
+		in.ignore(1000, '\n');
+		std::cout << "Ziua trebuie sa fie un numar intreg pozitiv!" << std::endl;
+		in >> day;
+	}
 	std::cout << "Introduceti luna: ";
 	in >> month;
+	while (in.fail() || month < 1 || month > 12) {
+		in.clear();
+		in.ignore(1000, '\n');
+		std::cout << "Luna trebuie sa fie un numar intreg pozitiv!" << std::endl;
+		in >> day;
+	}
 	std::cout << "Introduceti anul: ";
 	in >> year;
+	while (in.fail() || year <= 2022) {
+		in.clear();
+		in.ignore(1000, '\n');
+		std::cout << "Anul trebuie sa fie un numar intreg pozitiv (si mai cel putin 2022)!" << std::endl;
+		in >> day;
+	}
 	while (!Utils::validateDate(day, month, year)) {
 		std::cout << "Ati introdus o data invalida! Reintroduceti:" << std::endl;
 		std::cout << "ziua: ";
 		in >> day;
+		while (in.fail() || day < 1 || day > 31) {
+			in.clear();
+			in.ignore(1000, '\n');
+			std::cout << "Ziua trebuie sa fie un numar intreg pozitiv!" << std::endl;
+			in >> day;
+		}
 		std::cout << "luna: ";
 		in >> month;
+		while (in.fail() || month < 1 || month > 12) {
+			in.clear();
+			in.ignore(1000, '\n');
+			std::cout << "Luna trebuie sa fie un numar intreg pozitiv!" << std::endl;
+			in >> day;
+		}
 		std::cout << "anul: ";
 		in >> year;
+		while (in.fail() || year <= 2022) {
+			in.clear();
+			in.ignore(1000, '\n');
+			std::cout << "Anul trebuie sa fie un numar intreg pozitiv (si mai cel putin 2022)!" << std::endl;
+			in >> day;
+		}
 	}
 	d.day = day;
 	d.month = month;

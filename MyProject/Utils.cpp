@@ -195,24 +195,28 @@ std::tm* Utils::getCurrentDate() {
 	return now;
 }
 
-unsigned Utils::requireUnsigned(const char* message)
+unsigned Utils::requireUnsigned(std::istream& in, const char* message)
 {
-	unsigned temp;
-	std::cin >> temp;
-	while (temp < 1) {
+	int temp;
+	in >> temp;
+	while (in.fail() || temp < 0) {
+		in.clear();
+		in.ignore(10000, '\n');
 		std::cout << message;
-		std::cin >> temp;
+		in >> temp;
 	}
 	return temp;
 }
 
-float Utils::requireFloat(const char* message)
+float Utils::requireFloat(std::istream& in, const char* message)
 {
 	float temp;
-	std::cin >> temp;
-	while (temp < 0) {
+	in >> temp;
+	while (in.fail() || temp < 0) {
+		in.clear();
+		in.ignore(10000, '\n');
 		std::cout << message;
-		std::cin >> temp;
+		in >> temp;
 	}
 	return temp;
 }

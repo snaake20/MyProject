@@ -34,8 +34,8 @@ public:
 	static std::tm* getCurrentDate();
 
 	//require imput
-	static unsigned requireUnsigned(const char* message);
-	static float requireFloat(const char* message);
+	static unsigned requireUnsigned(std::istream& in, const char* message);
+	static float requireFloat(std::istream& in, const char* message);
 	static std::string requireString(const char* message);
 	static std::string generateId();
 };

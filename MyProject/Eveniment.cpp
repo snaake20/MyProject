@@ -82,7 +82,7 @@ std::istream& operator>>(std::istream& in, Eveniment& e) {
 	buffer = Utils::requireString("Denumirea evenimentului nu poate fi vida! Reintroduceti denumirea evenimentului: ");
 	Utils::reallocChar(e.denumireEveniment, buffer.c_str());
 	std::cout << "Introduceti pretul biletului: ";
-	e.pretBilet = Utils::requireFloat("Pretul biletului trebuie sa fie un numar pozitiv! Reintroduceti pretul biletului: ");
+	e.pretBilet = Utils::requireFloat(in, "Pretul biletului trebuie sa fie un numar pozitiv! Reintroduceti pretul biletului: ");
 	in >> *e.time;
 	in >> *e.date;
 	//in >> *e.locatie;

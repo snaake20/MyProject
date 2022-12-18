@@ -30,16 +30,40 @@ std::istream& operator>>(std::istream& in, Time& t) {
 	unsigned temp;
 	std::cout << "Introduceti ora: ";
 	in >> temp;
-	while (temp > 23) {
-		std::cout << "Ai gresit ora. Reintroduceti ora: ";
+	if (in.fail()) {
+		in.clear();
+		in.ignore(1000, '\n');
+		std::cout << "Ora trebuie sa fie un numar intreg pozitiv!" << std::endl;
 		in >> temp;
+	}
+	while (temp > 24) {
+		std::cout << "Ai gresit ora (mai mare decat 24). Reintroduceti ora: ";
+		in >> temp;
+		if (in.fail()) {
+			in.clear();
+			in.ignore(1000, '\n');
+			std::cout << "Ora trebuie sa fie un numar intreg pozitiv!" << std::endl;
+			in >> temp;
+		}
 	}
 	t.hour = temp;
 	std::cout << "Introduceti minutul: ";
 	in >> temp;
-	while (temp > 59) {
-		std::cout << "Ai gresit minutul. Reintroduceti minutul: ";
+	if (in.fail()) {
+		in.clear();
+		in.ignore(1000, '\n');
+		std::cout << "Minutul trebuie sa fie un numar intreg pozitiv!" << std::endl;
 		in >> temp;
+	}
+	while (temp > 60) {
+		std::cout << "Ai gresit minutul (mai mare decat 60). Reintroduceti minutul: ";
+		in >> temp;
+		if (in.fail()) {
+			in.clear();
+			in.ignore(1000, '\n');
+			std::cout << "Minutul trebuie sa fie un numar intreg pozitiv!" << std::endl;
+			in >> temp;
+		}
 	}
 	t.minute = temp;
 	return in;

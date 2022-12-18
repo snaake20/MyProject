@@ -41,12 +41,25 @@ Locatie::Locatie(const std::string numeLocatie, const unsigned nrLocuri, const u
 	{
 		for (unsigned j = 0; j < nrLocuri; j++)
 		{
+			if (nrRanduri % 2 == 0) {
 				if (i < nrRanduri / 2) {
 					zone[i][j] = '1';
 				}
 				if (i >= nrRanduri / 2) {
 					zone[i][j] = '2';
 				}
+			}
+			else {
+				if (i < nrRanduri / 2) {
+					zone[i][j] = '1';
+				}
+				if (i > nrRanduri / 2) {
+					zone[i][j] = '2';
+				}
+				if (i == nrRanduri / 2) {
+					zone[i][j] = '3';
+				}
+			}
 		}
 	}
 	nrLocatii++;
@@ -101,11 +114,15 @@ std::istream& operator>>(std::istream& in, Locatie& l)
 	std::cout << "Nume locatie: ";
 	l.numeLocatie = Utils::requireString("Ai introdus un string invalid. Introdu iar numele locatiei: ");
 	std::cout << "Numar randuri: ";
-	l.nrRanduri = Utils::requireUnsigned("Ai introdus un numar invalid. Introdu iar numarul de randuri: ");
+	l.nrRanduri = Utils::requireUnsigned(in, "Ai introdus un numar invalid. Introdu iar numarul de randuri: ");
 	std::cout << "Numar locuri: ";
-	l.nrLocuri = Utils::requireUnsigned("Ai introdus un numar invalid. Introdu iar numarul de locuri (pe rand): ");
+	l.nrLocuri = Utils::requireUnsigned(in, "Ai introdus un numar invalid. Introdu iar numarul de locuri (pe rand): ");
 	std::cout << "Numar randuri VIP: ";
-	l.nrRanduriVip = Utils::requireUnsigned("Ai introdus un numar invalid. Introdu iar numarul de randuri VIP: ");
+	l.nrRanduriVip = Utils::requireUnsigned(in, "Ai introdus un numar invalid. Introdu iar numarul de randuri VIP: ");
+	while (l.nrRanduriVip > l.nrRanduri) {
+		std::cout << "Numarul de randuri VIP nu poate fi mai mare decat numarul de randuri. Introdu iar numarul de randuri VIP: ";
+		l.nrRanduriVip = Utils::requireUnsigned(in, "Ai introdus un numar invalid. Introdu iar numarul de randuri VIP: ");
+	}
 	if (l.nrRanduriVip > 0) {
 		l.randuriVip = new unsigned[l.nrRanduriVip];
 		for (unsigned i = 0; i < l.nrRanduriVip; i++)
@@ -113,7 +130,7 @@ std::istream& operator>>(std::istream& in, Locatie& l)
 			unsigned temp;
 			std::cout << "Randurile vip sunt: ";
 			in >> temp;
-			while (temp < l.nrRanduri || temp > l.nrRanduri) {
+			while (temp - 1 < 0 || temp - 1 > l.nrRanduri) {
 				std::cout << "Randul introdus nu exista. Introdu iar randul: ";
 				in >> temp;
 			}
@@ -202,11 +219,24 @@ Locatie& Locatie::operator+(const unsigned nrRanduri)
 		this->zone[i] = new char[this->nrLocuri];
 		for (unsigned j = 0; j < this->nrLocuri; j++)
 		{
-			if (i < this->nrRanduri / 2) {
-				zone[i][j] = '1';
+			if (nrRanduri % 2 == 0) {
+				if (i < this->nrRanduri / 2) {
+					zone[i][j] = '1';
+				}
+				if (i >= this->nrRanduri / 2) {
+					zone[i][j] = '2';
+				}
 			}
-			if (i >= this->nrRanduri / 2) {
-				zone[i][j] = '2';
+			else {
+				if (i < this->nrRanduri / 2) {
+					zone[i][j] = '1';
+				}
+				if (i == this->nrRanduri / 2) {
+					zone[i][j] = '3';
+				}
+				if (i >= this->nrRanduri / 2) {
+					zone[i][j] = '2';
+				}
 			}
 		}
 	}
@@ -303,7 +333,7 @@ void Locatie::setRanduriVip(const unsigned* randuriVip, const unsigned nrRanduri
 			delete[] this->randuriVip;
 		this->randuriVip = new unsigned[this->nrRanduriVip];
 		for (unsigned i = 0; i < this->nrRanduriVip; i++)
-			this->randuriVip[i] = randuriVip[i] - 1;
+			this->randuriVip[i] = randuriVip[i];
 		this->setZonaVip();
 	}
 }
@@ -347,15 +377,34 @@ void Locatie::setDefaultZone()
 	for (unsigned i = 0; i < nrRanduri; i++) {
 		zone[i] = new char[nrLocuri];
 	}
-	for (unsigned i = 0; i < nrRanduri; i++)
-	{
-		for (unsigned j = 0; j < nrLocuri; j++)
+	if (nrRanduri % 2 == 1) {	
+		for (unsigned i = 0; i < nrRanduri; i++)
 		{
-			if (i < nrRanduri / 2) {
-				zone[i][j] = '1';
+			for (unsigned j = 0; j < nrLocuri; j++)
+			{
+				if (i < nrRanduri / 2) {
+					zone[i][j] = '1';
+				}
+				if (i == nrRanduri / 2) {
+					zone[i][j] = '3';
+				}
+				if (i > nrRanduri / 2) {
+					zone[i][j] = '2';
+				}
 			}
-			if (i > nrRanduri / 2) {
-				zone[i][j] = '2';
+		}
+	}
+	if (nrRanduri % 2 == 0) {
+		for (unsigned i = 0; i < nrRanduri; i++)
+		{
+			for (unsigned j = 0; j < nrLocuri; j++)
+			{
+				if (i < nrRanduri / 2) {
+					zone[i][j] = '1';
+				}
+				if (i > nrRanduri / 2) {
+					zone[i][j] = '2';
+				}
 			}
 		}
 	}
@@ -371,7 +420,7 @@ void Locatie::setZonaVip()
 	{
 		for (unsigned j = 0; j < nrLocuri; j++)
 		{
-			zone[randuriVip[i]][j] = 'S';
+			zone[randuriVip[i] - 1][j] = 'S';
 		}
 	}
 }

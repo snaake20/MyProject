@@ -35,6 +35,8 @@ int main()
 
 	system("CLS");
 
+	std::cin >> l;
+
 	std::cin >> b;
 
 	std::cout << b;

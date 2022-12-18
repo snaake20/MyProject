@@ -100,7 +100,7 @@ std::istream& operator>> (std::istream& in, Bilet& b) {
 		in >> tempRand;
 	}
 	
-	while (b.eveniment->getLocatie().isRandStandard(tempRand - 1) != tempIsStandard || b.eveniment->getLocatie().getNrLocuriRand(tempRand - 1) == 0) {
+	while (b.eveniment->getLocatie().isRandStandard(tempRand) != tempIsStandard || b.eveniment->getLocatie().getNrLocuriRand(tempRand - 1) == 0) {
 		std::cout << "Randul selectat nu este " << (tempIsStandard ? "standard" : "special") << " sau nu mai are locuri disponibile. Introduceti un rand valid: ";
 		in >> tempRand;
 	}
