@@ -112,7 +112,7 @@ Locatie& Locatie::operator=(const Locatie& l)
 std::istream& operator>>(std::istream& in, Locatie& l)
 {
 	std::cout << "Nume locatie: ";
-	l.numeLocatie = Utils::requireString("Ai introdus un string invalid. Introdu iar numele locatiei: ");
+	l.numeLocatie = Utils::requireString(in, "Ai introdus un string invalid. Introdu iar numele locatiei: ");
 	std::cout << "Numar randuri: ";
 	l.nrRanduri = Utils::requireUnsigned(in, "Ai introdus un numar invalid. Introdu iar numarul de randuri: ");
 	std::cout << "Numar locuri: ";

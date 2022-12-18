@@ -221,13 +221,13 @@ float Utils::requireFloat(std::istream& in, const char* message)
 	return temp;
 }
 
-std::string Utils::requireString(const char* message)
+std::string Utils::requireString(std::istream& in, const char* message)
 {
 	std::string buffer;
-	std::getline(std::cin,buffer);
+	std::getline(in,buffer);
 	while (buffer.empty()) {
 		std::cout << message;
-		std::cin >> buffer;
+		std::getline(in, buffer);
 	}
 	return buffer;
 }
