@@ -62,8 +62,15 @@ std::istream& operator>> (std::istream& in, Bilet& b) {
 	
 	std::cout << "Nr. locuri standard: " << b.eveniment->getNrLocuriDisponibileStandard() << " nr. locuri speciale: " << b.eveniment->getNrLocuriDisponibileSpeciale() << " total: " << b.eveniment->getLocatie().afisareNrLocuriDisponibile() << std::endl;
 	
-	std::cout << "Biletul este standard: (1/0) ";
+	std::cout << "Tipul biletului este: (1/0) 1=standard 0=special ";
 	in >> tempIsStandard;
+
+	while (in.fail()) {
+		in.clear();
+		in.ignore(1000, '\n');
+		std::cout << "Tipul biletului este gresit. Reintroduceti tipul biletului: (1/0) 1=standard 0=special ";
+		in >> tempIsStandard;
+	}
 
 	if (!b.eveniment->getNrLocuriDisponibileSpeciale() && tempIsStandard == 0)
 	{
@@ -88,15 +95,25 @@ std::istream& operator>> (std::istream& in, Bilet& b) {
 	
 	std::cout << "Nr rand: ";
 	in >> tempRand;
-	while (tempRand - 1 < 1 || tempRand - 1 > b.eveniment->getLocatie().getNrRanduri() || b.eveniment->getLocatie().isRandStandard(tempRand - 1) != tempIsStandard || b.eveniment->getLocatie().getNrLocuriRand(tempRand - 1) == 0) {
+	while (tempRand - 1 < 0 || tempRand > b.eveniment->getLocatie().getNrRanduri() ) {
 		std::cout << "Randul introdus nu este valid. Introduceti un rand valid: ";
+		in >> tempRand;
+	}
+	
+	while (b.eveniment->getLocatie().isRandStandard(tempRand - 1) != tempIsStandard || b.eveniment->getLocatie().getNrLocuriRand(tempRand - 1) == 0) {
+		std::cout << "Randul selectat nu este " << (tempIsStandard ? "standard" : "special") << " sau nu mai are locuri disponibile. Introduceti un rand valid: ";
 		in >> tempRand;
 	}
 	
 	std::cout << "Loc: ";
 	in >> tempLoc;
-	while (tempLoc - 1 < 1 || tempLoc - 1 > b.eveniment->getLocatie().getNrLocuri() || b.eveniment->getLocatie()[tempRand - 1][tempLoc - 1] == 0) {
-		std::cout << "Randul introdus nu este valid. Introduceti un rand valid: ";
+	while (tempLoc - 1 < 0 || tempLoc > b.eveniment->getLocatie().getNrLocuri()) {
+		std::cout << "Locul introdus nu este valid. Introduceti un rand valid: ";
+		in >> tempLoc;
+	}
+
+	while (b.eveniment->getLocatie()[tempRand - 1][tempLoc - 1] == 0) {
+		std::cout << "Locul introdus este ocupat. Introduceti un loc valid: ";
 		in >> tempLoc;
 	}
 
@@ -176,11 +193,11 @@ void Bilet::setEveniment(Eveniment& eveniment)
 }
 
 void Bilet::confirmareBilet() {
-	this->eveniment->getLocatieToModify()->ocupaLoc(rand, loc);
+	this->eveniment->getLocatieToModify()->ocupaLoc(rand - 1, loc - 1);
 }
 
 void Bilet::renuntareBilet() {
-	this->eveniment->getLocatieToModify()->elibereazaLoc(rand, loc);
+	this->eveniment->getLocatieToModify()->elibereazaLoc(rand - 1, loc - 1);
 }
 
 float Bilet::getPretFinal()
