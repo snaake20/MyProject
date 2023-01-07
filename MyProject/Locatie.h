@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <fstream>
 
 class Locatie
 {
@@ -55,8 +56,9 @@ public:
 	static void setNrLocatii(const unsigned nrLocatii);
 
 	//general methods
-	void setDefaultDisponibilitate();
-	void setDefaultZone();
+	virtual void setDefaultDisponibilitate();
+	virtual void setDefaultZone();
+	
 	void setZonaVip();
 	unsigned afisareNrLocuriDisponibile();
 	void ocupaLoc(const unsigned rand, const unsigned loc);
@@ -66,4 +68,5 @@ public:
 	
 	void afisareDisponibilitateLocuriSiZone();
 
+	void postToBinaryFile();
 };

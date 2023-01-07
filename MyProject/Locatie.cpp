@@ -490,3 +490,34 @@ void Locatie::afisareDisponibilitateLocuriSiZone() {
 		std::cout << std::endl;
 	}
 }
+
+void Locatie::postToBinaryFile()
+{
+	std::ofstream file;
+	file.open("locatii.bin", std::ios::binary | std::ios::app);
+	if (file.is_open()) {
+		file.write((char*)&this->nrRanduri, sizeof(unsigned));
+		file.write((char*)&this->nrLocuri, sizeof(unsigned));
+		file.write((char*)&this->nrRanduriVip, sizeof(unsigned));
+		file.write((char*)&this->nrLocatii, sizeof(unsigned));
+		for (unsigned i = 0; i < this->nrRanduri; i++)
+		{
+			for (unsigned j = 0; j < this->nrLocuri; j++)
+			{
+				file.write((char*)&this->disponibilitateLocuri[i][j], sizeof(unsigned));
+			}
+		}
+		for (unsigned i = 0; i < this->nrRanduri; i++)
+		{
+			for (unsigned j = 0; j < this->nrLocuri; j++)
+			{
+				file.write((char*)&this->zone[i][j], sizeof(char));
+			}
+		}
+		for (unsigned i = 0; i < this->nrRanduriVip; i++)
+		{
+			file.write((char*)&this->randuriVip[i], sizeof(unsigned));
+		}
+	}
+	file.close();
+}
